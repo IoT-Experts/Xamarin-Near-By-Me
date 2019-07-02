@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="NearByMe.DetailPage" 
+             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions" 
+             BackgroundColor="#4066D9" 
+             xmlns:ff="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:local="clr-namespace:NearByMe.Helper.Converter"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:ImageURLConverter x:Key="imageURLConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.Platforms>
+                <On Platform="iOS" Value="0, 20, 0, 0" />
+                <On Platform="Android" Value="0, 0, 0, 0" />
+                <On Platform="UWP" Value="0, 0, 0, 0" />
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </ContentPage.Padding>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#f3f3f3" Spacing="0">
+            <Grid BackgroundColor="White">
+                <Label BackgroundColor="#4066D9" Text="Near By Me" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" TextColor="White" FontSize="20" HeightRequest="50" />
+                <Image Source="back" HeightRequest="25" WidthRequest="25" Margin="10" VerticalOptions="Center" HorizontalOptions="Start" >
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Back_Tapped" NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+            <ScrollView>
+                <StackLayout>
+                    <controls:CarouselViewControl HeightRequest="200" x:Name="imgSlider" IndicatorsTintColor="White" CurrentPageIndicatorTintColor="#4066D9" Orientation="Horizontal" ShowIndicators="true" ShowArrows="false" Position="0" HorizontalOptions="FillAndExpand">
+                        <controls:CarouselViewControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--<Image Source="{Binding photo_reference, Converter={StaticResource imageURLConverter}}" HeightRequest="250" HorizontalOptions="Start" Aspect="Fill" />-->
+                                <ff:CachedImage DownsampleToViewSize="true" Source="{Binding photo_reference, Converter={StaticResource imageURLConverter}}" HeightRequest="250" HorizontalOptions="Start" Aspect="Fill"/>
+                            </DataTemplate>
+                        </controls:CarouselViewControl.ItemTemplate>
+                    </controls:CarouselViewControl>
+                    <Frame HasShadow="false" Margin="5" BorderColor="Silver">
+                        <StackLayout Spacing="10">
+                            <Label Grid.Column="1" Text="Adventist Wockhardt Heart Hospital- Surat" TextColor="Black" FontSize="Medium" />
+                            <Grid Grid.Column="1" Grid.Row="2">
+                                <Image Source="Map" HeightRequest="20" WidthRequest="20" HorizontalOptions="Start" VerticalOptions="Start" />
+                                <Label TextColor="Gray" Text="311 Canopus Mall, Near Ghod Dod Rd, Parle Point, City Light Town, Athwa, Surat, Gujarat 395007" FontSize="Micro" Margin="30,0,0,0" />
+                            </Grid>
+                            <Grid Grid.Column="1" Grid.Row="2">
+                                <Image Source="call" HeightRequest="20" WidthRequest="20" HorizontalOptions="Start" VerticalOptions="Start" />
+                                <Label TextColor="Gray" Text="+91-8460875783" FontSize="Micro" Margin="30,0,0,0" />
+                                <Label Text="CALL" HorizontalOptions="End" FontSize="Small" TextColor="#4066D9" />
+                            </Grid>
+                            <BoxView HeightRequest="1" BackgroundColor="Gray" />
+                            <!--<Image Source="Gmap" HeightRequest="170" HorizontalOptions="Start" Aspect="Fill" />-->
+                            <maps:Map HeightRequest="170" x:Name="MyMap" MapType="Hybrid" />
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
